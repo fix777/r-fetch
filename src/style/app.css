@@ -1,0 +1,12 @@
+:root {
+  --color-primary: skyblue;
+  --border-radius: 4px;
+  --circle-boder-radius: 50%;
+}
+
+.avatar {
+  padding: 15px;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--circle-boder-radius);
+}
