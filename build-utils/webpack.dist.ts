@@ -29,7 +29,6 @@ const stringified = {
 
 export const devConfig: webpack.Configuration = {
   entry: [
-    "babel-polyfill",
     paths.indexTs,
   ],
   // devtool: "cheap-eval-source-map",
