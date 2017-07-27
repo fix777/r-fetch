@@ -15,7 +15,8 @@
   "homepage": "https://github.com/fix777/r-fetch#readme",
   "scripts": {
     "dev": "webpack-dev-server --hot --env.env=dev",
-    "dist": "webpack --env.env=dist --env.NODE_ENV=production"
+    "dist": "webpack --env.env=dist --env.NODE_ENV=production",
+    "prepublish": "yarn dist"
   },
   "devDependencies": {
     "@types/node": "^8.0.16",
