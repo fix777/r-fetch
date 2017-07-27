@@ -1,7 +1,11 @@
 import * as webpack from "webpack";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
+import * as ExtractTextPlugin from "extract-text-webpack-plugin";
 
 import paths from "./paths";
+
+// Note: defined here because it will be used more than once.
+const cssFilename = "bundle.css";
 
 export const devConfig: webpack.Configuration = {
   entry: [
@@ -13,11 +17,18 @@ export const devConfig: webpack.Configuration = {
     path: paths.appDev,
     filename: "bundle.js",
   },
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM",
+  },
   plugins: [
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    new ExtractTextPlugin({
+      filename: cssFilename,
     }),
   ],
 };

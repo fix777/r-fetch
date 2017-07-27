@@ -2,7 +2,6 @@
   "name": "r-fetch",
   "version": "0.1.2",
   "main": "dist/index.js",
-  "module": "dist/index.js",
   "author": "fix777 <wangguoguo.lan@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -14,7 +13,7 @@
   },
   "homepage": "https://github.com/fix777/r-fetch#readme",
   "scripts": {
-    "dev": "webpack-dev-server --hot --env.env=dev",
+    "dev": "yarn dist && webpack-dev-server --hot --env.env=dev --env.NODE_ENV=development",
     "dist": "webpack --env.env=dist --env.NODE_ENV=production",
     "prepublish": "yarn dist"
   },
@@ -22,7 +21,6 @@
     "@types/node": "^8.0.16",
     "@types/react": "^15.0.39",
     "@types/react-dom": "^15.5.1",
-    "@types/webpack": "^3.0.5",
     "antd": "^2.12.2",
     "autoprefixer": "^7.1.2",
     "awesome-typescript-loader": "^3.2.1",

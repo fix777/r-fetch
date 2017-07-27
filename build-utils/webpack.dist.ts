@@ -35,10 +35,28 @@ export const devConfig: webpack.Configuration = {
   output: {
     path: paths.appDist,
     filename: "index.js",
+    library: "RFetch",
+    libraryTarget: "umd",
   },
   externals: {
-    "react": "React",
-    "react-dom": "ReactDOM",
+    "antd": {
+      commonjs: "antd",
+      commonjs2: "antd",
+      amd: "antd",
+      root: "antd",
+    },
+    "react": {
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "React",
+      root: "react",
+    },
+    "react-dom": {
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "ReactDOM",
+      root: "react-dom",
+    },
   },
   plugins: [
     new webpack.DefinePlugin(stringified),
