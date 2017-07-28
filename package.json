@@ -18,14 +18,16 @@
     "dist": "webpack --env.env=dist --env.NODE_ENV=production",
     "prepublish": "yarn dist"
   },
+  "dependencies": {
+    "antd": "^2.12.2",
+    "axios": "^0.16.2"
+  },
   "devDependencies": {
     "@types/node": "^8.0.16",
     "@types/react": "^15.0.39",
     "@types/react-dom": "^15.5.1",
-    "antd": "^2.12.2",
     "autoprefixer": "^7.1.2",
     "awesome-typescript-loader": "^3.2.1",
-    "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
