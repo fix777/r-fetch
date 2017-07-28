@@ -45,6 +45,12 @@ export const devConfig: webpack.Configuration = {
       amd: "antd",
       root: "antd",
     },
+    "axios": {
+      commonjs: "axios",
+      commonjs2: "axios",
+      amd: "axios",
+      root: "axios",
+    },
     "react": {
       commonjs: "react",
       commonjs2: "react",
