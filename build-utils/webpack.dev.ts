@@ -17,6 +17,22 @@ export const devConfig: webpack.Configuration = {
     path: paths.appDev,
     filename: "bundle.js",
   },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: [
+          "babel-loader",
+          {
+            loader: "awesome-typescript-loader",
+            options: {
+              configFileName: "tsconfig.dev.json",
+            },
+          },
+        ],
+      },
+    ],
+  },
   externals: {
     "react": "React",
     "react-dom": "ReactDOM",

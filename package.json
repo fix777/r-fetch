@@ -14,7 +14,8 @@
   },
   "homepage": "https://github.com/fix777/r-fetch#readme",
   "scripts": {
-    "dev": "yarn dist && webpack-dev-server --hot --env.env=dev --env.NODE_ENV=development",
+    "dist:dev": "yarn dist && yarn dev",
+    "dev": "webpack-dev-server --hot --env.env=dev --env.NODE_ENV=development",
     "dist": "webpack --env.env=dist --env.NODE_ENV=production",
     "prepublish": "yarn dist"
   },

@@ -9,8 +9,6 @@
     "noUnusedLocals": true,
     "allowJs": false,
     "checkJs": false,
-    "declaration": true,
-    "declarationDir": "./dist/",
     "types": [
       "node",
       "react",
@@ -24,7 +22,7 @@
     ]
   },
   "include": [
-    "src/utils/**/*",
+    "src/**/*",
     "./typings/**/*"
   ],
   "exclude": [

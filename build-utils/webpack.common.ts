@@ -10,13 +10,18 @@ export const commonConfig: webpack.Configuration = {
   },
   module: {
     rules: [
-      {
-        test: /\.tsx?$/,
-        use: [
-          "babel-loader",
-          "awesome-typescript-loader",
-        ],
-      },
+      // {
+      //   test: /\.tsx?$/,
+      //   use: [
+      //     "babel-loader",
+      //     {
+      //       loader: "awesome-typescript-loader",
+      //       options: {
+      //         configFileName: "tsconfig.dev.json",
+      //       },
+      //     },
+      //   ],
+      // },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
       // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -24,8 +29,7 @@ export const commonConfig: webpack.Configuration = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 
-          extractCss.extract({
+        loader: extractCss.extract({
             fallback: "style-loader",
             use: [
               {

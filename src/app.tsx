@@ -5,12 +5,9 @@ const { SubMenu } = Menu;
 
 import "./style/app.css";
 
-import { RFetchConfigs } from "./utils/r-fetch";
-
 import RFetch from "./../dist";
+import { RFetchConfigs } from "./../dist/r-fetch";
 import "./../dist/index.css";
-
-console.log(RFetch);
 
 const getRFetchConfig = (ctx: App): RFetchConfigs => ({
   searchUsers: {
@@ -37,7 +34,7 @@ interface AppState {
 }
 
 class App extends React.Component<{}, AppState> {
-  private rFetch: any;
+  private rFetch: RFetch;
 
   constructor(props) {
     super(props);
