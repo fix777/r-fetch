@@ -2,6 +2,7 @@
   "name": "r-fetch",
   "version": "0.1.5",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "fix777 <wangguoguo.lan@gmail.com>",
   "license": "MIT",
   "repository": {
