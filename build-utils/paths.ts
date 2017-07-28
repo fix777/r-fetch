@@ -12,7 +12,7 @@ const paths = {
   appHtml: resolveApp('public/index.html'),
   appIndexTsx: resolveApp("src/index.tsx"),
   appDist: resolveApp("dist"),
-  indexTs: resolveApp("src/utils/r-fetch.ts"),
+  indexTs: resolveApp("src/utils/index.ts"),
 };
 
 export default paths;
