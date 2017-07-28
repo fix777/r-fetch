@@ -32,7 +32,7 @@ export interface Config {
   notificationConfig?: NotificationConfig;
 }
 
-export type RuntimeConfig = AxiosRequestConfig;
+export interface RuntimeConfig extends AxiosRequestConfig {};
 
 export interface Configs {
   [apiKey: string]: Config;

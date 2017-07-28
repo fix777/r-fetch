@@ -7,8 +7,18 @@
     "jsx": "preserve",
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "allowJs": true,
+    "allowJs": false,
     "checkJs": false,
+    "declaration": true,
+    "declarationDir": "dist/",
+    "typeRoots": [
+      "./typings"
+    ],
+    "types": [
+      "node",
+      "react",
+      "react-dom"
+    ],
     "target": "es6",
     "lib": [
       "dom",
@@ -17,8 +27,7 @@
     ]
   },
   "include": [
-    "src/**/*",
-    "typings/**/*"
+    "src/utils/**/*"
   ],
   "exclude": [
     "node_modules"

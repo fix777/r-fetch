@@ -12,7 +12,7 @@ export class RFetch {
 
   public request = async (apiKey: string, runtimeConfig: RuntimeConfig = {}) => {
     if (!this.configs) return console.error("Configs is required."); // tslint:disable-line:no-console
-    console.log(this.configs[apiKey]);
+    // console.log(this.configs[apiKey]);
     const staticConfig = this.configs[apiKey];
     const r = await axiosAsync(mergeParams(staticConfig, runtimeConfig));
     const { callback, notificationConfig = {}, } = staticConfig;
