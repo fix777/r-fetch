@@ -1,5 +1,5 @@
 import axios from "axios";
 import "nprogress/nprogress.css";
-import { Config } from "./helper";
-export declare const axiosAsync: (config: Config) => Promise<any>;
+import { DefaultConfig } from "./helper";
+export declare const axiosAsync: (config: DefaultConfig) => Promise<any>;
 export default axios;

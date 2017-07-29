@@ -5,6 +5,8 @@ const { SubMenu } = Menu;
 
 import "./style/app.css";
 
+// import RFetch, { RFetchConfigs } from "./utils/r-fetch";
+
 import RFetch from "./../dist";
 import { RFetchConfigs } from "./../dist/r-fetch";
 import "./../dist/index.css";
@@ -21,9 +23,15 @@ const getRFetchConfig = (ctx: App): RFetchConfigs => ({
     notificationConfig: {
       enabled: true,
       success: {
-        message: "Hey, Your Reqeust has been resolved.",
-        description: "Ha lo ha!",
+        enabled: true,
+        args: {
+          message: "Hey, Your Reqeust has been resolved.",
+          description: "A lo ha!",
+        },
       },
+      error: {
+        enabled: true,
+      }
     },
   },
 });
@@ -47,7 +55,15 @@ class App extends React.Component<{}, AppState> {
   }
 
   componentDidMount() {
-    this.rFetch.request("searchUsers");
+    this.rFetch.request(
+      "searchUsers",
+      {
+        // params: {
+        //   q: "wesbos",
+        // },
+      },
+      (resp: any) => console.log(resp, "hahaha...")
+    );
   }
 
   public onSearchUsersEnd = (resp: any) => {
