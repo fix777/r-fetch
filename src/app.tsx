@@ -5,13 +5,12 @@ const { SubMenu } = Menu;
 
 import "./style/app.css";
 
-// import RFetch, { RFetchConfigs } from "./utils/r-fetch";
+// import RFetch, { RFetchConfigs } from "./utils";
 
-import RFetch from "./../dist";
-import { RFetchConfigs } from "./../dist/r-fetch";
+import RFetch, { RFetchConfigs }  from "./../dist";
 import "./../dist/index.css";
 
-const getRFetchConfig = (ctx: App): RFetchConfigs => ({
+const getRFetchConfig = (): RFetchConfigs => ({
   searchUsers: {
     requestConfig: {
       url: "https://api.github.com/search/users",
@@ -19,19 +18,11 @@ const getRFetchConfig = (ctx: App): RFetchConfigs => ({
         q: "fix777",
       },
     },
-    callback: ctx.onSearchUsersEnd,
     notificationConfig: {
-      enabled: true,
-      success: {
-        enabled: true,
-        args: {
-          message: "Hey, Your Reqeust has been resolved.",
-          description: "A lo ha!",
-        },
-      },
-      error: {
-        enabled: true,
-      }
+      onPreError: ({ data }: any) => ({
+        message: "Hey, Your Reqeust has been rejected.",
+        description: data.message,
+      }),
     },
   },
 });
@@ -47,7 +38,7 @@ class App extends React.Component<{}, AppState> {
   constructor(props) {
     super(props);
 
-    this.rFetch = new RFetch(getRFetchConfig(this));
+    this.rFetch = new RFetch(getRFetchConfig());
     this.state = {
       collapsed: false,
       users: [],
@@ -55,20 +46,25 @@ class App extends React.Component<{}, AppState> {
   }
 
   componentDidMount() {
-    this.rFetch.request(
-      "searchUsers",
-      {
-        // params: {
-        //   q: "wesbos",
-        // },
-      },
-      (resp: any) => console.log(resp, "hahaha...")
-    );
+    // this.rFetch.request("searchUsers")
+    // .then(console.log)
+    // .catch(e => {
+    //   console.warn(e);
+    //   debugger;
+    // });
+    this.handleResponse();
   }
 
-  public onSearchUsersEnd = (resp: any) => {
-    const { items } = resp;
-    this.setState({ users: items });
+  handleResponse = async () => {
+    try {
+      const { data } = await this.rFetch.request("searchUsers");
+      const { items } = data;
+      console.log("resp data: ", data);
+      this.setState({ users: items });
+    } catch (e) {
+      // debugger;
+      console.log(e.response);
+    }
   }
 
   private onCollapse = (collapsed) => {

@@ -1,39 +1,50 @@
-import axios from "axios";
-import promisify from "es6-promisify";
+import axios, { AxiosResponse } from "axios";
 
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
 
-import { DefaultConfig, tryCatch } from "./helper";
+import {
+  Config,
+  OnPre,
+  tryCatch,
+} from "./helper";
 import { notify } from "./helper-notification";
 
-export const axiosAsync = async (config: DefaultConfig) => {
-  const { requestConfig, progressConfig, notificationConfig } = config;
+export type AxiosPromise = Promise<AxiosResponse>;
+
+interface Exception {
+  response?: AxiosResponse;
+  [x: string]: any;
+}
+
+const handleThrow = (exception: Exception = {}, onPreError?: OnPre) => {
+  if (typeof onPreError != "function") return;
+  const { response } = exception;
+  const config = onPreError(response);
+  notify({
+    enabled: true,
+    type: "error",
+    config,
+  });
+}
+
+export const axiosAsync = async (config: Config): Promise<any> => {
+  const { requestConfig, progressConfig = {}, notificationConfig = {} } = config;
   const { enabled: enableProgress } = progressConfig;
-  const { enabled: enableNotify, error } = notificationConfig;
+  const { onPreError } = notificationConfig;
 
   if (enableProgress) nProgress.start();
-
-  const axiosify = promisify(axios);
-  const { type, arg } = await tryCatch(axiosify, null, requestConfig);
-
+  const { type, arg } = await tryCatch(axios, null, requestConfig);
   if (enableProgress) nProgress.done();
 
   if (type == "throw") {
-    console.error(arg);
-    if (!enableNotify) return;
-    notify({
-      enabled: error.enabled,
-      type: "error",
-      config: {
-        message: error.args && error.args.message || "Error",
-        description: error.args && error.args.description || arg.toString(),
-      }
-    });
-    return;
+    handleThrow(arg, onPreError);
   }
 
-  return arg;
+  return new Promise((resolve, reject) => {
+    if (type == "throw") reject(arg);
+    else if (type == "normal") resolve(arg);
+  });
 };
 
 export default axios;
