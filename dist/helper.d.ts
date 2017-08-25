@@ -3,8 +3,14 @@ import { ArgsProps } from "antd/lib/notification";
 export interface ProgressConfig {
     enabled?: boolean;
 }
+export interface NotifyBtn {
+    show: "both" | "success" | "error";
+    successText?: string;
+    errorText?: string;
+}
 export declare type OnPre = (resp?: AxiosResponse) => ArgsProps;
 export interface NotificationConfig {
+    showBtn?: boolean | NotifyBtn;
     onPreSuccess?: OnPre;
     onPreError?: OnPre;
 }
