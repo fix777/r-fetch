@@ -7,6 +7,7 @@ import {
   RuntimeConfig,
   mergeParams,
 } from "./helper";
+import "./index.css";
 
 export type OnPreError = OnPre;
 export type OnPreSuccess = OnPre;

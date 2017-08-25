@@ -5,23 +5,28 @@ const { SubMenu } = Menu;
 
 import "./style/app.css";
 
-// import RFetch, { RFetchConfigs } from "./utils";
+import RFetch, { RFetchConfigs } from "./utils";
 
-import RFetch, { RFetchConfigs }  from "./../dist";
-import "./../dist/index.css";
+// import RFetch, { RFetchConfigs }  from "./../dist";
+// import "./../dist/index.css";
 
 const getRFetchConfig = (): RFetchConfigs => ({
   searchUsers: {
     requestConfig: {
-      url: "https://api.github.com/search/users",
+      url: "https://api.github.com/search/users1",
       params: {
         q: "fix777",
       },
     },
     notificationConfig: {
+      showBtn: {
+        show: "error",
+        errorText: "我知道了",
+      },
       onPreError: ({ data }: any) => ({
         message: "Hey, Your Reqeust has been rejected.",
-        description: data.message,
+        description: String(data.message).repeat(100),
+        // duration: 2,
       }),
     },
   },

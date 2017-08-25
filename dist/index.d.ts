@@ -1,4 +1,5 @@
 import { OnPre, Configs, RuntimeConfig } from "./helper";
+import "./index.css";
 export declare type OnPreError = OnPre;
 export declare type OnPreSuccess = OnPre;
 export declare type RFetchConfigs = Configs;

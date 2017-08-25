@@ -5,8 +5,14 @@ export interface ProgressConfig {
   enabled?: boolean; // Default as true
 }
 
+export interface NotifyBtn {
+  show: "both" | "success" | "error";
+  successText?: string;
+  errorText?: string;
+}
 export type OnPre = (resp?: AxiosResponse) => ArgsProps;
 export interface NotificationConfig {
+  showBtn?: boolean | NotifyBtn;
   onPreSuccess?: OnPre;
   onPreError?: OnPre;
 }
