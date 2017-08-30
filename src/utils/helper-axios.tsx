@@ -54,7 +54,7 @@ const handleThrow = (exception: Exception = {}, notificationConfig: Notification
 
 export const axiosAsync = async (config: Config): Promise<any> => {
   const { requestConfig, progressConfig = {}, notificationConfig = {} } = config;
-  const { enabled: enableProgress } = progressConfig;
+  const { enabled: enableProgress = true } = progressConfig;
 
   if (enableProgress) nProgress.start();
   const { type, arg } = await tryCatch(axios, null, requestConfig);

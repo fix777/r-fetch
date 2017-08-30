@@ -8,7 +8,7 @@ import "./style/app.css";
 import RFetch, { RFetchConfigs } from "./utils";
 
 // import RFetch, { RFetchConfigs }  from "./../dist";
-// import "./../dist/index.css";
+import "./../dist/index.css";
 
 const getRFetchConfig = (): RFetchConfigs => ({
   searchUsers: {
