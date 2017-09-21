@@ -1,36 +1,30 @@
 import React from "react";
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { AxiosResponse, AxiosRequestConfig } from "axios";
+import { Layout, Menu, Breadcrumb, Icon } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 import "./style/app.css";
 
-import RFetch, { RFetchConfigs } from "./utils";
+import dataProvider from "./dataLayer";
 
-// import RFetch, { RFetchConfigs }  from "./../dist";
-import "./../dist/index.css";
+interface Params {
+  q?: string;
+}
 
-const getRFetchConfig = (): RFetchConfigs => ({
-  searchUsers: {
-    requestConfig: {
-      url: "https://api.github.com/search/users1",
-      params: {
-        q: "fix777",
-      },
-    },
-    notificationConfig: {
-      showBtn: {
-        show: "error",
-        errorText: "我知道了",
-      },
-      onPreError: ({ data }: any) => ({
-        message: "Hey, Your Reqeust has been rejected.",
-        description: String(data.message).repeat(100),
-        // duration: 2,
-      }),
-    },
-  },
-});
+const asyncFetch = (callback: (data: any) => void) => async (
+  params?: Params
+) => {
+  const options: AxiosRequestConfig = {};
+  if (params) {
+    options.params = params; // Method: GET
+  }
+  const { data }: AxiosResponse = await dataProvider.request(
+    "searchUsers",
+    options
+  );
+  callback(data);
+};
 
 interface AppState {
   collapsed: boolean;
@@ -38,46 +32,25 @@ interface AppState {
 }
 
 class App extends React.Component<{}, AppState> {
-  private rFetch: RFetch;
+  state: AppState = {
+    collapsed: false,
+    users: [],
+  };
 
-  constructor(props) {
-    super(props);
-
-    this.rFetch = new RFetch(getRFetchConfig());
-    this.state = {
-      collapsed: false,
-      users: [],
-    };
+  componentWillMount() {
+    asyncFetch(this.receiveUsers)();
   }
 
-  componentDidMount() {
-    // this.rFetch.request("searchUsers")
-    // .then(console.log)
-    // .catch(e => {
-    //   console.warn(e);
-    //   debugger;
-    // });
-    this.handleResponse();
-  }
+  receiveUsers = (data: any) => {
+    const { items } = data;
+    this.setState({ users: items });
+  };
 
-  handleResponse = async () => {
-    try {
-      const { data } = await this.rFetch.request("searchUsers");
-      const { items } = data;
-      console.log("resp data: ", data);
-      this.setState({ users: items });
-    } catch (e) {
-      // debugger;
-      console.log(e.response);
-    }
-  }
-
-  private onCollapse = (collapsed) => {
-    console.log(collapsed);
+  onCollapse = collapsed => {
     this.setState({ collapsed });
-  }
+  };
 
-  public render() {
+  render() {
     const { collapsed, users } = this.state;
 
     return (
@@ -86,13 +59,9 @@ class App extends React.Component<{}, AppState> {
           height: "100vh",
         }}
       >
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={this.onCollapse}
-        >
+        <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
           <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
             <Menu.Item key="1">
               <Icon type="pie-chart" />
               <span>Option 1</span>
@@ -103,7 +72,12 @@ class App extends React.Component<{}, AppState> {
             </Menu.Item>
             <SubMenu
               key="sub1"
-              title={<span><Icon type="user" /><span>User</span></span>}
+              title={
+                <span>
+                  <Icon type="user" />
+                  <span>User</span>
+                </span>
+              }
             >
               <Menu.Item key="3">Tom</Menu.Item>
               <Menu.Item key="4">Bill</Menu.Item>
@@ -111,7 +85,12 @@ class App extends React.Component<{}, AppState> {
             </SubMenu>
             <SubMenu
               key="sub2"
-              title={<span><Icon type="team" /><span>Team</span></span>}
+              title={
+                <span>
+                  <Icon type="team" />
+                  <span>Team</span>
+                </span>
+              }
             >
               <Menu.Item key="6">Team 1</Menu.Item>
               <Menu.Item key="8">Team 2</Menu.Item>
@@ -123,17 +102,27 @@ class App extends React.Component<{}, AppState> {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '12px 0' }}>
+          <Header style={{ background: "#fff", padding: 0 }} />
+          <Content style={{ margin: "0 16px" }}>
+            <Breadcrumb style={{ margin: "12px 0" }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>fix777</Breadcrumb.Item>
             </Breadcrumb>
-            <div style={{ padding: 24, background: '#fff', minHeight: "calc(100vh - 178px)" }}>
-              <img className="avatar" src={!!users.length ? users[0].avatar_url : "#"} alt="Hey, man. Here is your avatar." />
+            <div
+              style={{
+                padding: 24,
+                background: "#fff",
+                minHeight: "calc(100vh - 178px)",
+              }}
+            >
+              <img
+                className="avatar"
+                src={!!users.length ? users[0].avatar_url : "#"}
+                alt="Hey, man. Here is your avatar."
+              />
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
+          <Footer style={{ textAlign: "center" }}>
             Ant Design ©2016 Created by Ant UED
           </Footer>
         </Layout>
